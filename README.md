@@ -101,19 +101,19 @@ See the [GeoLambda Python README](python/README.md). The Python Lambda Layer inc
 
 The Docker images used to create the Lambda layer are also published to Docker Hub, and thus are also suitable for general use as a base image for geospatial applications. 
 
-The developmentseed/geolambda image in Docker Hub is tagged by version.
+The ahmeddaker/geolambda image in Docker Hub is tagged by version.
 
-	$ docker pull developmentseed/geolambda:<version>
+	$ docker pull ahmeddaker/geolambda:<version>
 
 Or just include it in your own Dockerfile as the base image.
 
 ```
-FROM developmentseed/geolambda:<version>
+FROM ahmeddaker/geolambda:<version>
 ```
 
 The GeoLambda image does not have an entrypoint defined, so a command must be provided when you run it. This example will mount the current directory to /work and run the container interactively.
 
-	$ docker run --rm -v $PWD:/home/geolambda -it developmentseed/geolambda:latest /bin/bash
+	$ docker run --rm -v $PWD:/home/geolambda -it ahmeddaker/geolambda:latest /bin/bash
 
 All of the GDAL CLI tools are installed so could be run on images in the current directory.
 
@@ -126,7 +126,7 @@ When making a merge to the `master` branch be sure to increment the `VERSION` fi
 
 ### Create a new version
 
-Use the Dockerfile here as a template for your own version of GeoLambda. Simply edit it to remove or add additional libraries, then build and tag with your own name. The steps below are used to create a new official version of GeoLambda, replace `developmentseed/geolambda` with your own name.
+Use the Dockerfile here as a template for your own version of GeoLambda. Simply edit it to remove or add additional libraries, then build and tag with your own name. The steps below are used to create a new official version of GeoLambda, replace `ahmeddaker/geolambda` with your own name.
 
 To create a new version of GeoLambda follow these steps. Note that this is the manual process of what is currently done in CircleCI, so it is not necessary to perform them but they are useful as an example for deploying your own versions.
 
@@ -138,20 +138,20 @@ The version in the VERSION file will be used to tag the Docker images and create
   
 ```
 $ VERSION=$(cat VERSION)
-$ docker build . -t developmentseed/geolambda:${VERSION}
+$ docker build . -t ahmeddaker/geolambda:${VERSION}
 ```
 
 3. Push the image to Docker Hub:
 
 ```
-$ docker push developmentseed/geolambda:${VERSION}
+$ docker push ahmeddaker/geolambda:${VERSION}
 ```
 
 4. Create deployment package using the built-in [packaging script](bin/package.sh)
 
 ```
 $ docker run --rm -v $PWD:/home/geolambda \
-	-it developmentseed/geolambda:${VERSION} package.sh
+	-it ahmeddaker/geolambda:${VERSION} package.sh
 ```
 
 This will create a lambda/ directory containing the native libraries and related files, along with a `lambda-deploy.zip` file that can be deployed as a Lambda layer.
