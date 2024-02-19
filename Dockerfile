@@ -13,7 +13,7 @@ RUN \
 
 # versions of packages
 ENV \
-    GDAL_VERSION=3.2.1 \
+    GDAL_VERSION=3.8.3 \
     PROJ_VERSION=7.2.1 \
     GEOS_VERSION=3.8.1 \
     GEOTIFF_VERSION=1.6.0 \
